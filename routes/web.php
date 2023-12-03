@@ -14,7 +14,7 @@ use App\Http\Controllers\TodoController;
 |
 */
 
-Route::get('/', [TodoController::class, 'index']);
+Route::get('/', [TodoController::class, 'CorrectHomepage']);
 
 Route::get('create', [TodoController::class, 'create']);
 Route::post('store-data', [TodoController::class, 'store']);

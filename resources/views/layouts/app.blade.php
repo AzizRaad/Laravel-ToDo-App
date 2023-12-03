@@ -22,13 +22,20 @@
 </head>
 
 <body>
-
-<nav class="navbar navbar-light bg-light">
-    <div class="container">
-        <a href="/"><span class="navbar-brand mb-0 h1">Todo</span></a>
-        <a href="/create"><span class="btn btn-primary">Create Todo</span></a>
-    </div>
-</nav>
+    @auth
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a href="/"><span class="navbar-brand mb-0 h1">Todo</span></a>
+            <a href="/create"><span class="btn btn-primary">Create Todo</span></a>
+        </div>
+    </nav>
+    @else
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a href="/"><span class="navbar-brand mb-0 h1">Todo</span></a>
+        </div>
+    </nav>
+    @endauth
 
 <div class="container">
 

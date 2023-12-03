@@ -89,18 +89,32 @@ class TodoController extends Controller
         return redirect('/');
     }
 
+    public function CorrectHomepage(){
+        if(auth()->check()){
+            return view('homepage-feed');
+        }else{
+            return view('index');
+        }
+    }
+
     public function loginpage(){
         return view('loginpage');
     }
 
     public function login(Request $req){
-        $data = request()->all();
+        $data = $req -> validate([
+            'loginusername' => 'required',
+            'loginpassword' => 'required'
+        ]);
 
         if(auth()->attempt(['name'=>$data['loginusername'],'password'=>$data['loginpassword']])){
+            $req->session()->regenerate();
             return 'Working !!';
         }else{
             return 'nothing';
         }
         return view('login');
     }
+
+    
 }
