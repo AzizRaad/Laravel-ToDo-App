@@ -86,6 +86,7 @@ class TodoController extends Controller
         $user->password = $data['password'];
         $user->password = $data['password'];
         $user->save();
+
         return redirect('/');
     }
 
@@ -109,12 +110,16 @@ class TodoController extends Controller
 
         if(auth()->attempt(['name'=>$data['loginusername'],'password'=>$data['loginpassword']])){
             $req->session()->regenerate();
-            return 'Working !!';
+            $username = $req['loginusername'] ;
+            $welcomeText = "Welcome, {$username} you successfully logged in";
+            return redirect('/')->with('success',$welcomeText);
         }else{
-            return 'nothing';
+            return redirect('/loginpage')->with('failure', 'Wrong Credentials, please try again');
         }
-        return view('login');
     }
 
-    
+    public function logout(){
+        auth()->logout();
+        return redirect('/')->with('success','Successfully Logged Out');
+    }
 }

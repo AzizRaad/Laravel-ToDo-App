@@ -14,7 +14,7 @@ use App\Http\Controllers\TodoController;
 |
 */
 
-Route::get('/', [TodoController::class, 'CorrectHomepage']);
+Route::get('/', [TodoController::class, 'index']);
 
 Route::get('create', [TodoController::class, 'create']);
 Route::post('store-data', [TodoController::class, 'store']);
@@ -30,3 +30,5 @@ Route::post('reg', [TodoController::class, 'register']);
 
 Route::get('loginpage', [TodoController::class, 'loginpage']);
 Route::post('login', [TodoController::class, 'login']);
+
+Route::get('logout', [TodoController::class, 'logout']);

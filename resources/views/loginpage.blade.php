@@ -15,11 +15,10 @@
 
 
 <header class="header-bar mb-3">
-    <div class="container d-flex flex-column flex-md-row align-items-center p-3">
+  <div class="container d-flex flex-column flex-md-row align-items-center p-3">
       <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">OurApp</a></h4>
-      <a href="/"><span class="btn btn-primary">BACK</span></a>
       <form action="login" method="POST" class="mb-0 pt-2 pt-md-0">
-        @csrf
+      @csrf
         <div class="row align-items-center">
           <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
             <input name="loginusername" class="form-control form-control-sm input-dark" type="text" placeholder="Username" autocomplete="off" />
@@ -29,12 +28,18 @@
           </div>
           <div class="col-md-auto">
             <button class="btn btn-primary btn-sm">Sign In</button>
-            
+            <a href="/"><span class="btn btn-primary btn-sm">BACK</span></a>
           </div>
         </div>
-      </form>
-      
-    </div>
-  </header>
+        @if (session()->has('failure'))
+          <div class="container container--narrow">
+            <div class="alert alert-danger text-center">
+              {{session('failure')}}
+            </div>
+          </div>            
+        @endif
+      </form>  
+  </div>
+</header>
 
   
