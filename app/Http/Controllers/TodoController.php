@@ -5,19 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TodoController extends Controller
 {
-    public function index(){
-        $todo = Todo::all(); //using $todo to call the model we created earlier to communicate with the specific table in database
-        return view('index')->with('todos', $todo); // here we pass the info we retrieved to the index.blase.php page 
+
+    public function index(User $pizza){
+        $todo = DB::select("SELECT * FROM todos WHERE user_id = ?",[auth()->id()]); //using $todo to call the model we created earlier to communicate with the specific table in database
+        return view('index')->with('todos',$todo); #,['todos' => $pizza->todos()->latest()->get()]
     }
 
     public function create(){
         return view('create');
     }
 
-    public function store(){
+    public function store(Request $req){
 
         try{
             $this->validate(request(),[
@@ -28,12 +30,13 @@ class TodoController extends Controller
         }
 
         $data = request()->all();
-
+        
         $todo = new Todo();
-        // on the right of (=) is the name of variable in DB
-        // on the left of (=) is the name of the variable in the form/view
+        // on the left of (=) is the name of variable in DB
+        // on the right of (=) is the name of the variable in the form/view
         $todo->name = $data['name'];
         $todo->description = $data['description'];
+        $todo->user_id = auth()->id();
         $todo->save();
 
         session()->flash('success', 'todo created succesfully'); // first argument is the name of var, the second is the message
@@ -61,6 +64,7 @@ class TodoController extends Controller
 
         $todo->name =$data['name'];
         $todo->description = $data['description'];
+        $todo->user_id = auth()->id();
         $todo->save();
 
         session()->flash('success','Todo updated succesfully');
