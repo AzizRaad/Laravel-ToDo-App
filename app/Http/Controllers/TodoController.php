@@ -11,8 +11,12 @@ class TodoController extends Controller
 {
 
     public function index(User $pizza){
-        $todo = DB::select("SELECT * FROM todos WHERE user_id = ?",[auth()->id()]); //using $todo to call the model we created earlier to communicate with the specific table in database
-        return view('index')->with('todos',$todo); #,['todos' => $pizza->todos()->latest()->get()]
+        //$todo = DB::select("SELECT * FROM todos WHERE user_id = ?",[auth()->id()]);
+        $todo = DB::table('todos')->select('*')->where('user_id','=',auth()->id())->latest()->get(); //using $todo to call the model we created earlier to communicate with the specific table in database
+        //return $todo;
+        return view('index')->with('todos',$todo);
+        //return $pizza->todos()->get();
+        // return view('index',['todos' => $pizza->todos()->orderBy('created_at')]); #,['todos' => $pizza->todos()->latest()->get()]
     }
 
     public function create(){
